@@ -1,5 +1,7 @@
 from models.usuario import Usuario
+
 # Importa la clase Usuario desde la carpeta models.
+
 
 class UsuarioService:
     # Se crea la clase UsuarioService.
@@ -21,7 +23,7 @@ class UsuarioService:
 
         cursor.execute(
             "INSERT INTO usuarios (nombre, email) VALUES (%s, %s)",
-            (usuario.nombre, usuario.email)
+            (usuario.nombre, usuario.email),
         )
         # INSERT INTO agrega un nuevo registro en la tabla usuarios.
         # Se insertan el nombre y email del objeto usuario.
@@ -45,9 +47,7 @@ class UsuarioService:
         for row in cursor.fetchall():
             # Recorre todos los registros obtenidos.
 
-            usuarios.append(
-                Usuario(row[1], row[2], row[0])
-            )
+            usuarios.append(Usuario(row[1], row[2], row[0]))
             # Crea un objeto Usuario con los datos de cada fila
             # y lo agrega a la lista usuarios.
             #
@@ -67,7 +67,7 @@ class UsuarioService:
 
         cursor.execute(
             "UPDATE usuarios SET nombre=%s, email=%s WHERE id=%s",
-            (usuario.nombre, usuario.email, usuario.id)
+            (usuario.nombre, usuario.email, usuario.id),
         )
         # UPDATE modifica los datos del usuario.
         # WHERE id=%s indica qué usuario se actualizará.
@@ -82,10 +82,7 @@ class UsuarioService:
         cursor = self.db.get_cursor()
         # Obtiene un cursor.
 
-        cursor.execute(
-            "DELETE FROM usuarios WHERE id=%s",
-            (id,)
-        )
+        cursor.execute("DELETE FROM usuarios WHERE id=%s", (id,))
         # DELETE elimina el usuario según el id enviado.
 
         self.db.commit()

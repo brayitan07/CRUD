@@ -1,22 +1,23 @@
 from config.db import database
+
 # Importa la clase database desde la carpeta config.
 
 from services.usuario_service import UsuarioService
+
 # Importa el servicio de usuarios.
 
 from services.tarea_service import TareaService
+
 # Importa el servicio de tareas.
 
 from models.usuario import Usuario
+
 # Importa el modelo Usuario.
 
 from models.tarea import Tarea
+
 # Importa el modelo Tarea.
 
-
-# =========================
-# MENU USUARIOS
-# =========================
 def menu_usuarios(service):
     # Función que muestra el menú CRUD de usuarios.
 
@@ -73,9 +74,7 @@ def menu_usuarios(service):
             email = input("Nuevo email: ")
             # Pide el nuevo correo.
 
-            service.actualizar(
-                Usuario(nombre, email, id_usuario)
-            )
+            service.actualizar(Usuario(nombre, email, id_usuario))
             # Actualiza el usuario con los nuevos datos.
 
             print("✅ Usuario actualizado")
@@ -101,10 +100,6 @@ def menu_usuarios(service):
             print("❌ Opción inválida")
             # Mensaje si la opción no existe.
 
-
-# =========================
-# MENU TAREAS
-# =========================
 def menu_tareas(service):
     # Función que muestra el menú CRUD de tareas.
 
@@ -132,9 +127,7 @@ def menu_tareas(service):
             usuario_id = int(input("ID Usuario: "))
             # Pide el id del usuario.
 
-            service.crear(
-                Tarea(titulo, descripcion, usuario_id)
-            )
+            service.crear(Tarea(titulo, descripcion, usuario_id))
             # Crea y guarda una nueva tarea.
 
             print("✅ Tarea creada correctamente")
@@ -204,10 +197,6 @@ def menu_tareas(service):
             print("❌ Opción inválida")
             # Mensaje si la opción es incorrecta.
 
-
-# =========================
-# MAIN PRINCIPAL
-# =========================
 def main():
     # Función principal del programa.
 
@@ -254,9 +243,6 @@ def main():
             # Mensaje si la opción no existe.
 
 
-# =========================
-# EJECUCIÓN
-# =========================
 if __name__ == "__main__":
     # Verifica si este archivo es el principal.
 

@@ -1,5 +1,7 @@
 from models.tarea import Tarea
+
 # Importa la clase Tarea desde la carpeta models.
+
 
 class TareaService:
     # Se crea la clase TareaService.
@@ -20,7 +22,7 @@ class TareaService:
 
         cursor.execute(
             "INSERT INTO tareas (titulo, descripcion, usuario_id) VALUES (%s, %s, %s)",
-            (tarea.titulo, tarea.descripcion, tarea.usuario_id)
+            (tarea.titulo, tarea.descripcion, tarea.usuario_id),
         )
         # Inserta una nueva tarea en la tabla tareas.
         # Los valores se toman del objeto tarea.
@@ -58,7 +60,7 @@ class TareaService:
 
         cursor.execute(
             "UPDATE tareas SET titulo=%s, descripcion=%s, usuario_id=%s WHERE id=%s",
-            (tarea.titulo, tarea.descripcion, tarea.usuario_id, tarea.id)
+            (tarea.titulo, tarea.descripcion, tarea.usuario_id, tarea.id),
         )
         # UPDATE modifica datos de una tarea.
         # WHERE id=%s indica qué tarea se va a actualizar.
