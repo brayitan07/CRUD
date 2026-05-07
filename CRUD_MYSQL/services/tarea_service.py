@@ -21,7 +21,7 @@ class TareaService:
         # Obtiene un cursor para ejecutar consultas SQL.
 
         cursor.execute(
-            "INSERT INTO tareas (titulo, descripcion, usuario_id) VALUES (%s, %s, %s)",
+            "INSERT INTO tareas (titulo, descripcion, usuario_id, categoria_id) VALUES (%s, %s, %s, %s)",
             (tarea.titulo, tarea.descripcion, tarea.usuario_id),
         )
         # Inserta una nueva tarea en la tabla tareas.
@@ -30,26 +30,20 @@ class TareaService:
         self.db.commit()
         # Guarda los cambios en la base de datos.
 
-    # READ
+
     def listar(self):
-        # Método para listar todas las tareas.
-
         cursor = self.db.get_cursor()
-        # Obtiene un cursor.
-
         cursor.execute("""
-        SELECT t.id, t.titulo, t.descripcion, u.nombre
-        FROM tareas t
-        INNER JOIN usuarios u
-        ON t.usuario_id = u.id
-    """)
-        # Consulta SQL:
-        # SELECT obtiene datos.
-        # INNER JOIN une la tabla tareas con la tabla usuarios.
-        # ON indica la relación entre ambas tablas.
-
-        return cursor.fetchall()
-        # fetchall() devuelve todos los registros encontrados.
+            SELECT tareas.id,
+                   tareas.titulo,
+                   tareas.descripcion,
+                   usuarios.nombre
+            FROM tareas
+            INNER JOIN usuarios
+            ON tareas.usuario_id = usuarios.id
+        """)
+        tareas = cursor.fetchall()
+        return tareas
 
     # UPDATE
     def actualizar(self, tarea):
@@ -59,8 +53,14 @@ class TareaService:
         # Obtiene un cursor.
 
         cursor.execute(
-            "UPDATE tareas SET titulo=%s, descripcion=%s, usuario_id=%s WHERE id=%s",
-            (tarea.titulo, tarea.descripcion, tarea.usuario_id, tarea.id),
+            "UPDATE tareas SET titulo=%s, descripcion=%s, usuario_id=%s,  categoria_id=%s WHERE id=%s",
+            (
+                tarea.titulo,
+                tarea.descripcion,
+                tarea.usuario_id,
+                tarea.categoria_id,
+                tarea.id
+            ),
         )
         # UPDATE modifica datos de una tarea.
         # WHERE id=%s indica qué tarea se va a actualizar.

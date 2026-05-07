@@ -10,6 +10,8 @@ from services.tarea_service import TareaService
 
 # Importa el servicio de tareas.
 
+from services.categoria_service import CategoriaService
+
 from models.usuario import Usuario
 
 # Importa el modelo Usuario.
@@ -17,6 +19,8 @@ from models.usuario import Usuario
 from models.tarea import Tarea
 
 # Importa el modelo Tarea.
+
+from models.categoria import Categorias
 
 def menu_usuarios(service):
     # Función que muestra el menú CRUD de usuarios.
@@ -153,28 +157,18 @@ def menu_tareas(service):
         # ACTUALIZAR
         elif opcion == "3":
 
-            id_tarea = int(input("ID tarea: "))
-            # Pide el id de la tarea.
+         id_tarea = int(input("ID tarea: "))
+         titulo = input("Nuevo título: ")
+         descripcion = input("Nueva descripción: ")
+         usuario_id = int(input("Nuevo ID usuario: "))
+      
+         categoria_id = int(input("Nuevo ID categoria: "))
 
-            titulo = input("Nuevo título: ")
-            # Pide el nuevo título.
-
-            descripcion = input("Nueva descripción: ")
-            # Pide la nueva descripción.
-
-            usuario_id = int(input("Nuevo ID usuario: "))
-            # Pide el nuevo id de usuario.
-
-            tarea = Tarea(titulo, descripcion, usuario_id)
-            # Crea el objeto tarea.
-
-            tarea.id = id_tarea
-            # Asigna el id de la tarea.
-
-            service.actualizar(tarea)
-            # Actualiza la tarea.
-
-            print("✅ Tarea actualizada correctamente")
+         tarea = Tarea(titulo, descripcion, usuario_id, categoria_id)
+         
+         tarea.id = id_tarea
+         service.actualizar(tarea)
+         print("✅ Tarea actualizada correctamente")
 
         # ELIMINAR
         elif opcion == "4":
@@ -197,6 +191,37 @@ def menu_tareas(service):
             print("❌ Opción inválida")
             # Mensaje si la opción es incorrecta.
 
+def menu_categorias(service):
+    while True:
+        print("\n--- CRUD CATEGORIA ---")
+        print("1. Crear")
+        print("2. Listar")
+        print("3. Actualizar")
+        print("4. Eliminar")
+        print("5. Volver")
+
+        op = input("Opcion: ")
+
+        if op == "1":
+            nombre = input("Nombre: ")
+            service.crear(Categorias(nombre))
+
+        elif op == "2":
+            for c in service.listar():
+                print(f"ID: {c[0]} | Nombre: {c[1]}")
+
+        elif op == "3":
+            id = int(input("ID: "))
+            nombre = input("Nuevo nombre: ")
+            service.actualizar(Categorias(nombre,id))
+
+        elif op == "4":
+            id = int(input("ID: "))
+            service.eliminar(id)
+
+        elif op == "5":
+            break
+
 def main():
     # Función principal del programa.
 
@@ -209,12 +234,16 @@ def main():
     tarea_service = TareaService(db)
     # Crea el servicio de tareas.
 
+    categoria_service = CategoriaService(db)
+
+
     while True:
 
         print("\n========== SISTEMA CRUD ==========")
         print("1. CRUD Usuarios")
         print("2. CRUD Tareas")
-        print("3. Salir")
+        print("3. CRUD Categorias")
+        print("4. Salir")
 
         op = input("Seleccione una opción: ")
         # Guarda la opción del usuario.
@@ -228,6 +257,9 @@ def main():
             # Abre el menú de tareas.
 
         elif op == "3":
+            menu_categorias(categoria_service)
+
+        elif op =="4":
 
             db.close()
             # Cierra la conexión con la base de datos.
@@ -243,8 +275,8 @@ def main():
             # Mensaje si la opción no existe.
 
 
+
 if __name__ == "__main__":
     # Verifica si este archivo es el principal.
-
     main()
     # Ejecuta la función principal.
