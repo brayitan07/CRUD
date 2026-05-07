@@ -15,12 +15,15 @@ class TareaService:
 
     # READ
     def listar(self):
+        
         cursor = self.db.get_cursor()
+        
         cursor.execute("""
-            SELECT t.id, t.titulo, t.descripcion, u.nombre
-            FROM tareas t
-            JOIN usuarios u ON t.usuario_id = u.id
-        """)
+        SELECT t.id, t.titulo, t.descripcion, u.nombre
+        FROM tareas t
+        INNER JOIN usuarios u
+        ON t.usuario_id = u.id
+    """)
         return cursor.fetchall()
 
     # UPDATE
